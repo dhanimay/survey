@@ -1,0 +1,88 @@
+.flex-cc, main {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #ddd; }
+
+.content {
+  border: 1px solid green;
+  padding: 1rem 2rem 2rem;
+  border-radius: 5px;
+  text-align: center; }
+  .content .question-count {
+    font-size: 2rem; }
+    .content .question-count .fa-question {
+      font-size: 3rem;
+      margin-right: 10px;
+      color: goldenrod;
+      transition: transform 1s; }
+      .content .question-count .fa-question:hover {
+        transition-delay: 0.5s;
+        transform: rotate(360deg); }
+  .content .question {
+    font-size: 2rem;
+    font-weight: bold;
+    color: darkblue;
+    font-family: sans-serif;
+    margin-bottom: 2rem; }
+  .content .answers {
+    list-style-type: none;
+    display: flex;
+    padding: 0; }
+    .content .answers .fa-cloud {
+      font-size: 7rem;
+      color: rgba(0, 0, 128, 0.5); }
+      .content .answers .fa-cloud:before {
+        position: absolute; }
+    .content .answers button {
+      position: relative;
+      top: -1.5rem;
+      border: 0;
+      background-color: transparent;
+      width: 100%;
+      padding: 0;
+      cursor: pointer; }
+    .content .answers li {
+      margin-right: 1rem; }
+      .content .answers li:last-of-type {
+        margin-right: 0; }
+  .content .navigation button:first-of-type {
+    float: left; }
+  .content .navigation button:last-of-type {
+    float: right; }
+  .content .results {
+    display: none; }
+    .content .results .meter {
+      display: flex;
+      width: 100%;
+      padding: 0 2rem;
+      position: relative;
+      border: 1px solid orange; }
+    .content .results .left-image, .content .results .right-image {
+      position: absolute;
+      background-color: purple;
+      height: 50px;
+      width: 50px; }
+    .content .results .left-image {
+      left: 0; }
+    .content .results .right-image {
+      right: 0; }
+    .content .results .agree {
+      background-color: green;
+      text-align: right; }
+    .content .results .neutral {
+      background-color: silver;
+      text-align: center; }
+    .content .results .disagree {
+      background-color: red;
+      text-align: left; }
+
+main {
+  height: 100%; }
+
+/*# sourceMappingURL=style.css.map */

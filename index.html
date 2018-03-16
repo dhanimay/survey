@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+  <nav>
+
+  </nav>
+  <main>
+    <div class='content'>
+      <div class='questions-container'>
+        <div class='question-count'>
+          <p>
+              <i class="fa fa-question"></i>Question <span class='question-index'>1</span> of <span class='question-total'>N</span>
+          </p>
+        </div>
+        <div class='question'>
+        </div>
+        <ul class='answers'>
+          <li><button value=2 data-side='agree' type='button'>Absolutely agree</button></li>
+          <li><button value=1 data-side='agree' type='button'>Somewhat agree</button></li>
+          <li><button value=1 data-side='neutral' type='button'>Neutral or hesitant</button></li>
+          <li><button value=1 data-side='disagree' type='button'>Rather disagree</button></li>
+          <li><button value=2 data-side='disagree' type='button'>Absolutely disagree</button></li>
+        </ul>
+        <div class='navigation'>
+          <button type='button'>Back</button>
+          <button type='button'>Random Results</button>  
+        </div>
+      </div>
+      <div class='results'>
+        <div class='meter' data-field='exploration'>
+          <div class='left-image'></div>
+          <div class='agree'></div>
+          <div class='neutral'></div>
+          <div class='disagree'></div>
+          <div class='right-image'></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>

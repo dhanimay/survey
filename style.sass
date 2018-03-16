@@ -1,0 +1,104 @@
+.flex-cc
+  display: flex
+  align-items: center
+  justify-content: center  
+  
+html, body
+  width: 100%
+  height: 100%
+  margin: 0
+  background-color: #ddd
+
+
+.content
+  border: 1px solid green
+  padding: 1rem 2rem 2rem
+  border-radius: 5px
+  text-align: center
+
+  .question-count
+    font-size: 2rem
+    .fa-question
+      font-size: 3rem
+      margin-right: 10px
+      color: goldenrod
+      transition: transform 1s 
+      &:hover
+        transition-delay: .5s
+        transform: rotate(360deg)
+
+  .question
+    font-size: 2rem
+    font-weight: bold
+    color: darkblue
+    font-family: sans-serif
+    margin-bottom: 2rem
+
+  .answers
+    list-style-type: none
+    display: flex
+    padding: 0
+
+    .fa-cloud
+      font-size: 7rem
+      color: rgba(navy, .5)
+      &:before
+        position: absolute
+
+    button
+      position: relative
+      top: -1.5rem
+      border: 0
+      background-color: transparent
+      width: 100%
+      padding: 0
+      cursor: pointer
+
+
+    li
+      margin-right: 1rem
+      &:last-of-type
+        margin-right: 0
+
+  .navigation
+    button:first-of-type
+      float: left
+    button:last-of-type
+      float: right
+
+  .results
+    display: none
+
+    .meter
+      display: flex
+      width: 100%
+      padding: 0 2rem
+      position: relative
+      border: 1px solid orange
+      
+
+    .left-image, .right-image
+      position: absolute
+      background-color: purple
+      height: 50px
+      width: 50px
+
+    .left-image
+      left: 0
+
+    .right-image
+      right: 0
+
+    .agree
+      background-color: green
+      text-align: right
+    .neutral
+      background-color: silver
+      text-align: center
+    .disagree
+      background-color: red
+      text-align: left
+
+main
+  @extend .flex-cc
+  height: 100%
