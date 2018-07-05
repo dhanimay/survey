@@ -1,0 +1,19 @@
+@mixin flex-cc()
+  display: flex
+  justify-content: center
+  align-items: center
+  
+@mixin dimensions($size)
+  height: $size
+  width: $size
+  
+main.game
+  @include flex-cc()
+
+
+.play-field
+  border: 1px solid goldenrod
+  // @include dimensions(80%)
+  //   position: relative
+
+#hero
