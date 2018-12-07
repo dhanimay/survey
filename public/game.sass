@@ -2,18 +2,24 @@
   display: flex
   justify-content: center
   align-items: center
-  
+
 @mixin dimensions($size)
   height: $size
   width: $size
-  
+
+body
+  overflow: hidden
+
 main.game
   @include flex-cc()
 
+nav > a
+  float: none
 
 .play-field
   border: 1px solid goldenrod
   // @include dimensions(80%)
   //   position: relative
+
 
 #hero
