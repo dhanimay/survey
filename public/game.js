@@ -1,21 +1,3 @@
-class World {
-  constructor () {
-    this.elements = []
-  }
-
-  addElement (element) {
-    this.elements.push(element)
-  }
-
-  collisions () {
-    this.elements.forEach((el) => el.collision())
-  }
-
-  render (context) {
-    this.elements.forEach((el) => el.render(context))
-  }
-}
-
 const world = new World()
 let hero
 const CANVAS = {element: null, width: 1000, height: 800}
@@ -38,6 +20,7 @@ function ready () {
   hero = new Hero(10, 10)
   world.addElement(new Feather())
   world.addElement(new Floor())
+  world.addElement(new Box())
 
   hero.velocityY = 5
 
@@ -60,15 +43,15 @@ $(window).on('keydown', function (ev) {
   if (ev.key == 'ArrowLeft') {
     hero.run('left')
   }
-  
+
   if (ev.key == 'ArrowRight') {
     hero.run('right')
   }
-  
+
 })
 
 $(window).on('keyup', function (ev) {
-  // if (ev.key == 'ArrowUp') { 
+  // if (ev.key == 'ArrowUp') {
   // }
 
   // if (ev.key == 'ArrowDown') {
@@ -90,12 +73,14 @@ class Hero {
     this.state = 'idle'
     this.sprite = new Image()
     this.sprite.src = '/assets/idle.gif'
-    this.x = x
-    this.y = y
-    this.velocityX = 0
-    this.velocityY = 0
     this.width = 35
     this.height = 70
+    this.x = x
+    this.y = y
+    this.X = this.x + this.width
+    this.Y = this.y + this.height
+    this.velocityX = 0
+    this.velocityY = 0
     this.weight = .5
     this.isFalling = true
     this.runKeydown = false
@@ -104,10 +89,27 @@ class Hero {
     this.gifIndex = 0
   }
 
-  setState(state) {  
+  setx(x) {
+    this.x = x
+    this.X = this.x + this.width
+  }
+
+  sety(y) {
+    this.y = y
+    this.Y = this.y + this.height
+  }
+
+  setState(state) {
     if (this.state != state) {
       this.state = state
     }
+  }
+
+  applySpecial (special, miliseconds) {
+    this.special = special
+    setTimeout(() => {
+      this.special = null
+    }, miliseconds)
   }
 
   cycleGif(state, frames) {
@@ -137,7 +139,7 @@ class Hero {
   }
 
   hitGround (elementsY) {
-    this.y = elementsY - this.height
+    this.sety(elementsY - this.height)
     this.isFalling = false
     if (this.runKeydown) {
       this.run()
@@ -157,7 +159,7 @@ class Hero {
   }
 
   falling() {
-    if (this.state == 'falling') return 
+    if (this.state == 'falling') return
     this.state = 'falling'
     this.clearGif()
     this.cycleGif('falling', 2)
@@ -166,7 +168,7 @@ class Hero {
   run (direction) {
     if (this.state == 'run' || this.isFalling) return
     this.velocityX += 5
-    if (direction) this.direction = direction 
+    if (direction) this.direction = direction
     this.runKeydown = true
     this.state = 'run'
     this.clearGif()
@@ -174,13 +176,26 @@ class Hero {
   }
 
   adjustPosition () {
-    this.y += this.velocityY
-    this.x += this.velocityX * (this.direction == 'left' ? -1 : 1)
+    let y = this.y + this.velocityY
+    let x = this.x + this.velocityX * (this.direction == 'left' ? -1 : 1)
+    this.setx(x)
+    this.sety(y)
   }
 
   render (context) {
     let x = this.direction == 'left' ? (this.x * -1) - this.width : this.x
     if (this.direction == 'left') context.scale(-1, 1)
+
+    switch (this.special) {
+      case 'feather':
+        context.filter = 'saturate(100%)'
+        context.shadowColor = 'purple'
+        context.shadowBlur = 10
+        break
+      default:
+        break
+    }
+
     context.drawImage(this.sprite, x, this.y, this.width, this.height)
   }
 
@@ -228,45 +243,10 @@ class Tile {
     if (hero.y + hero.height > this.y && hero.y < this.y) {
       hero.hitGround(this.y)
     }
-  
-    // if (hero.x + hero.width > CANVAS.width) {
-    //   hero.x = CANVAS.width - hero.width
-    // } 
-  
-    // if (hero.y + hero.height > CANVAS.height) {
-    //   hero.y = CANVAS.height - hero.height
-    //   hero.isFalling = false
-    //   if (hero.runKeydown) {
-    //     hero.run()
-    //   } else {
-    //     hero.idle()
-    //   }
-    // }
   }
 
   render (context) {
     context.drawImage(this.sprite, this.sheetX, this.sheetY, this.sheetWidth, this.sheetHeight, this.x, this.y, Tile.getRenderWidth(), this.sheetHeight)
-  }
-}
-
-class Feather {
-  constructor () {
-    this.width = 50
-    this.height = 50
-    this.x = CANVAS.width / 2
-    this.y =  CANVAS.height / 2
-    this.sprite = new Image()
-    this.sprite.src = `assets/feather.png`
-  }
-
-  collision () {
-    if (hero.y + hero.height > this.y && hero.y < this.y) {
-      world.remove(this)
-    }
-  }
-
-  render (context) {
-    context.drawImage(this.sprite, this.x, this.y, this.width, this.height)
   }
 }
 
@@ -301,12 +281,12 @@ function update () {
 
 function wallCollision () {
   if (hero.x < 0) {
-    hero.x = 0
+    hero.setx(0)
   }
 
   if (hero.x + hero.width > CANVAS.width) {
-    hero.x = CANVAS.width - hero.width
-  } 
+    hero.setx(CANVAS.width - hero.width)
+  }
 
   if (hero.y + hero.height > CANVAS.height) {
     hero.hitGround(CANVAS.height)
@@ -319,4 +299,4 @@ function render (context) {
   hero.render(context)
   context.restore()
   world.render(context)
-} 
+}
